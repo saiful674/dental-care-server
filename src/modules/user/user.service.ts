@@ -59,7 +59,6 @@ const createAdminIntoDb = async (password: string, payload: TAdmin) => {
     role: 'admin',
     password: password,
   };
-  console.log(payload);
   const session = await mongoose.startSession();
 
   try {
@@ -95,7 +94,6 @@ const createDoctorIntoDb = async (password: string, payload: TDoctor) => {
     role: 'doctor',
     password: password,
   };
-  console.log(payload);
   const session = await mongoose.startSession();
 
   try {

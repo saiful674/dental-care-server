@@ -30,7 +30,6 @@ export const generatePatientId = async () => {
   let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
 
   incrementId = `P-${incrementId}`;
-  console.log(lastPatientId, currentId, incrementId);
 
   return incrementId;
 };
@@ -65,7 +64,6 @@ export const generateAdminId = async () => {
   let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
 
   incrementId = `A-${incrementId}`;
-  console.log(lastAdminId, currentId, incrementId);
 
   return incrementId;
 };
@@ -100,7 +98,6 @@ export const generateDoctorId = async () => {
   let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
 
   incrementId = `D-${incrementId}`;
-  console.log(lastDoctorId, currentId, incrementId);
 
   return incrementId;
 };
