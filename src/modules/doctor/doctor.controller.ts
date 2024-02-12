@@ -20,8 +20,19 @@ const getSingleDoctor = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const deleteSingleDoctor = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await doctorServices.deleteDoctorFromDb(id);
+  // will send response data
+  res.status(200).json({
+    status: true,
+    message: 'Doctor is deleted successfully',
+    data: result,
+  });
+});
 
 export const doctorControllers = {
   getAllDoctors,
   getSingleDoctor,
+  deleteSingleDoctor,
 };
