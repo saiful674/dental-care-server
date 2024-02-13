@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { TAppointment } from './appointment.interface';
+import { AppointmentModel, TAppointment } from './appointment.interface';
 
 const appointmentSchema = new Schema<TAppointment>(
   {
@@ -62,6 +62,15 @@ const appointmentSchema = new Schema<TAppointment>(
   },
 );
 
-const Appointment = model<TAppointment>('Appointment', appointmentSchema);
+appointmentSchema.statics.isAppointmentExistsById = async function (
+  id: string,
+) {
+  return await Appointment.findOne({ _id: id, isDeleted: false });
+};
+
+const Appointment = model<TAppointment, AppointmentModel>(
+  'Appointment',
+  appointmentSchema,
+);
 
 export default Appointment;

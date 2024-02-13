@@ -1,19 +1,13 @@
+import bycript from 'bcrypt';
 import { Schema, model } from 'mongoose';
+import config from '../../config';
 import { TUser } from './user.interface';
-
 const userSchema = new Schema<TUser>(
   {
     email: {
       type: String,
       required: [true, 'Email is required'],
       unique: true,
-      validate: {
-        validator: function (value: string) {
-          // Simple email validation using regex
-          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-        },
-        message: 'Invalid email address',
-      },
     },
     id: {
       type: String,
@@ -22,6 +16,7 @@ const userSchema = new Schema<TUser>(
     password: {
       type: String,
       required: [true, 'Password is required'],
+      select: 0,
     },
     role: {
       type: String,
@@ -40,6 +35,18 @@ const userSchema = new Schema<TUser>(
   },
   { timestamps: true },
 );
+
+// monggose pre middleware/hook
+// hashed password before saving on db
+userSchema.pre('save', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  user.password = await bycript.hash(
+    user.password,
+    Number(config.bcrypt_salt_round),
+  );
+  next();
+});
 
 const User = model<TUser>('User', userSchema);
 

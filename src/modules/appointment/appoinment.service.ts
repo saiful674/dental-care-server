@@ -13,6 +13,7 @@ const createAppointmentIntoDb = async (payload: TAppointment) => {
   // check if the doctor already have an appointment in same shift
   const isAppointmentExists = await Appointment.find({
     doctorId: isDoctorExists._id,
+    isDeleted: false,
   });
   if (isAppointmentExists.length) {
     if (isAppointmentExists.length === 2) {
@@ -41,7 +42,7 @@ const getAllAppoinmentFromDb = async () => {
 };
 
 const getSingleAppoinmentFromDb = async (id: string) => {
-  const isAppointmnetExists = await Appointment.findById(id);
+  const isAppointmnetExists = await Appointment.isAppointmentExistsById(id);
   if (!isAppointmnetExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'Appointment not found');
   }
@@ -49,7 +50,7 @@ const getSingleAppoinmentFromDb = async (id: string) => {
 };
 
 const deleteAppointmentFromDb = async (id: string) => {
-  const isAppointmnetExists = await Appointment.findById(id);
+  const isAppointmnetExists = await Appointment.isAppointmentExistsById(id);
   if (!isAppointmnetExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'Appointment not found');
   }

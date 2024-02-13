@@ -1,3 +1,5 @@
+import { Model } from 'mongoose';
+
 export type TAppointment = {
   doctorId: string;
   dayOfWeek:
@@ -17,3 +19,8 @@ export type TAppointment = {
   isAvailable: boolean;
   isDeleted: boolean;
 };
+
+export interface AppointmentModel extends Model<TAppointment> {
+  //instance methods for checking if the user exist
+  isAppointmentExistsById(id: string): Promise<TAppointment>;
+}

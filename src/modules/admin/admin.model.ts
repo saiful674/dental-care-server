@@ -47,13 +47,6 @@ const adminSchema = new Schema<TAdmin>(
       type: String,
       required: [true, 'Email is required'],
       unique: true,
-      validate: {
-        validator: function (value: string) {
-          // Simple email validation using regex
-          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-        },
-        message: 'Invalid email address',
-      },
     },
     contactNumber: {
       type: String,

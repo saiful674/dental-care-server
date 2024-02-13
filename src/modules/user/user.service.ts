@@ -68,17 +68,18 @@ const createAdminIntoDb = async (password: string, payload: TAdmin) => {
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Faild to create account!');
     }
+    console.log(newUser);
     const adminData = { ...payload };
     adminData.user = newUser[0]._id;
     adminData.id = patientId;
-    const newDoctor = await Admin.create([adminData], { session });
+    const newAdmin = await Admin.create([adminData], { session });
 
-    if (!newDoctor.length) {
+    if (!newAdmin.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Faild to create account!');
     }
     await session.commitTransaction();
     await session.endSession();
-    return newDoctor;
+    return newAdmin;
   } catch (err) {
     await session.abortTransaction();
     await session.endSession();
