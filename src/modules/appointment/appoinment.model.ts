@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { Days } from './appointment.constant';
 import { AppointmentModel, TAppointment } from './appointment.interface';
 
 const appointmentSchema = new Schema<TAppointment>(
@@ -8,15 +9,11 @@ const appointmentSchema = new Schema<TAppointment>(
       required: [true, 'Doctor ID is required'],
     },
     dayOfWeek: {
-      type: String,
-      enum: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
+      type: [
+        {
+          type: String,
+          enum: Days,
+        },
       ],
       required: [true, 'Day of the week is required'],
     },

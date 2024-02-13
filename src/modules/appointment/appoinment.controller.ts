@@ -30,9 +30,23 @@ const getSingleAppointment = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const updateSingleAppointment = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await appointmentServices.updateAppointmentFromDb(
+    id,
+    req.body,
+  );
+  // will send response data
+  res.status(200).json({
+    status: true,
+    message: 'Appointment is updated successfully',
+    data: result,
+  });
+});
+
 const deleteSingleAppointment = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await appointmentServices.deleteAppointmentFromDb(id);
+  const result = await appointmentServices.deleteAppointmentIntoDb(id);
   // will send response data
   res.status(200).json({
     status: true,
@@ -45,5 +59,6 @@ export const appointmentControllers = {
   createAppointment,
   getAllAppointment,
   getSingleAppointment,
+  updateSingleAppointment,
   deleteSingleAppointment,
 };

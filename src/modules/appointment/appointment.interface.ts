@@ -1,15 +1,16 @@
 import { Model } from 'mongoose';
+type Days =
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday'
+  | 'Sunday';
 
 export type TAppointment = {
   doctorId: string;
-  dayOfWeek:
-    | 'Sunday'
-    | 'Monday'
-    | 'Tuesday'
-    | 'Wednesday'
-    | 'Thursday'
-    | 'Friday'
-    | 'Saturday';
+  dayOfWeek: Days[];
   startTime: string;
   endTime: string;
   fee: number;

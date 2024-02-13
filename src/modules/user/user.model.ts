@@ -38,9 +38,10 @@ const userSchema = new Schema<TUser>(
 
 // monggose pre middleware/hook
 // hashed password before saving on db
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function async(next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
+
   user.password = await bycript.hash(
     user.password,
     Number(config.bcrypt_salt_round),

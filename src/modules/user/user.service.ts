@@ -16,6 +16,15 @@ import {
 } from './user.utils';
 
 const createPatientIntoDb = async (password: string, payload: TPatient) => {
+  const isUserExistsBySameEmial = await User.findOne({ email: payload.email });
+
+  if (isUserExistsBySameEmial) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'This email is already used!. please use another email.',
+    );
+  }
+
   const patientId = await generatePatientId();
   const userData: TUser = {
     id: patientId,
@@ -51,6 +60,15 @@ const createPatientIntoDb = async (password: string, payload: TPatient) => {
 };
 
 const createAdminIntoDb = async (password: string, payload: TAdmin) => {
+  const isUserExistsBySameEmial = await User.findOne({ email: payload.email });
+
+  if (isUserExistsBySameEmial) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'This email is already used!. please use another email.',
+    );
+  }
+
   // genarate admin id
   const patientId = await generateAdminId();
   const userData: TUser = {
@@ -87,6 +105,14 @@ const createAdminIntoDb = async (password: string, payload: TAdmin) => {
 };
 
 const createDoctorIntoDb = async (password: string, payload: TDoctor) => {
+  const isUserExistsBySameEmial = await User.findOne({ email: payload.email });
+
+  if (isUserExistsBySameEmial) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'This email is already used!. please use another email.',
+    );
+  }
   // genarate doctor id
   const doctorId = await generateDoctorId();
   const userData: TUser = {

@@ -13,6 +13,13 @@ router.post(
 );
 router.get('/', appointmentControllers.getAllAppointment);
 router.get('/:id', appointmentControllers.getSingleAppointment);
+router.patch(
+  '/:id',
+  validateRequest(
+    appointmentValidationSchema.updateAppointmentValidationSchema,
+  ),
+  appointmentControllers.updateSingleAppointment,
+);
 router.delete('/:id', appointmentControllers.deleteSingleAppointment);
 
 export const appoinmentRoutes = router;

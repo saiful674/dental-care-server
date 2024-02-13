@@ -49,7 +49,23 @@ const getSingleAppoinmentFromDb = async (id: string) => {
   return isAppointmnetExists;
 };
 
-const deleteAppointmentFromDb = async (id: string) => {
+const updateAppointmentFromDb = async (
+  id: string,
+  payload: Partial<TAppointment>,
+) => {
+  const isAppointmnetExists = await Appointment.isAppointmentExistsById(id);
+
+  if (!isAppointmnetExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Appointment not found');
+  }
+
+  const result = await Appointment.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+  return result;
+};
+
+const deleteAppointmentIntoDb = async (id: string) => {
   const isAppointmnetExists = await Appointment.isAppointmentExistsById(id);
   if (!isAppointmnetExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'Appointment not found');
@@ -62,5 +78,6 @@ export const appointmentServices = {
   createAppointmentIntoDb,
   getAllAppoinmentFromDb,
   getSingleAppoinmentFromDb,
-  deleteAppointmentFromDb,
+  deleteAppointmentIntoDb,
+  updateAppointmentFromDb,
 };
