@@ -11,6 +11,39 @@ const createAppointment = catchAsync(async (req, res) => {
   });
 });
 
+const getAllAppointment = catchAsync(async (req, res) => {
+  const result = await appointmentServices.getAllAppoinmentFromDb();
+  // will send response data
+  res.status(200).json({
+    status: true,
+    message: 'Appointments are retrived successfully',
+    data: result,
+  });
+});
+const getSingleAppointment = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await appointmentServices.getSingleAppoinmentFromDb(id);
+  // will send response data
+  res.status(200).json({
+    status: true,
+    message: 'Appointment id retrived successfully',
+    data: result,
+  });
+});
+const deleteSingleAppointment = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await appointmentServices.deleteAppointmentFromDb(id);
+  // will send response data
+  res.status(200).json({
+    status: true,
+    message: 'Appointment is deleted successfully',
+    data: result,
+  });
+});
+
 export const appointmentControllers = {
   createAppointment,
+  getAllAppointment,
+  getSingleAppointment,
+  deleteSingleAppointment,
 };

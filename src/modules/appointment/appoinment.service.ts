@@ -35,6 +35,31 @@ const createAppointmentIntoDb = async (payload: TAppointment) => {
   return result;
 };
 
+const getAllAppoinmentFromDb = async () => {
+  const result = await Appointment.find({ isDeleted: false });
+  return result;
+};
+
+const getSingleAppoinmentFromDb = async (id: string) => {
+  const isAppointmnetExists = await Appointment.findById(id);
+  if (!isAppointmnetExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Appointment not found');
+  }
+  return isAppointmnetExists;
+};
+
+const deleteAppointmentFromDb = async (id: string) => {
+  const isAppointmnetExists = await Appointment.findById(id);
+  if (!isAppointmnetExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Appointment not found');
+  }
+  const result = await Appointment.findByIdAndUpdate(id, { isDeleted: true });
+  return result;
+};
+
 export const appointmentServices = {
   createAppointmentIntoDb,
+  getAllAppoinmentFromDb,
+  getSingleAppoinmentFromDb,
+  deleteAppointmentFromDb,
 };

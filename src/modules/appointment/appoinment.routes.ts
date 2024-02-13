@@ -11,5 +11,8 @@ router.post(
   ),
   appointmentControllers.createAppointment,
 );
+router.get('/', appointmentControllers.getAllAppointment);
+router.get('/:id', appointmentControllers.getSingleAppointment);
+router.delete('/:id', appointmentControllers.deleteSingleAppointment);
 
 export const appoinmentRoutes = router;
