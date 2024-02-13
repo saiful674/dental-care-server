@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 type Days =
   | 'Monday'
   | 'Tuesday'
@@ -9,7 +9,7 @@ type Days =
   | 'Sunday';
 
 export type TAppointment = {
-  doctorId: string;
+  doctorId: Types.ObjectId;
   dayOfWeek: Days[];
   startTime: string;
   endTime: string;

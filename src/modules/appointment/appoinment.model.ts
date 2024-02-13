@@ -5,8 +5,9 @@ import { AppointmentModel, TAppointment } from './appointment.interface';
 const appointmentSchema = new Schema<TAppointment>(
   {
     doctorId: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: [true, 'Doctor ID is required'],
+      ref: 'Doctor',
     },
     dayOfWeek: {
       type: [
