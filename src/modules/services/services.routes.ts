@@ -17,4 +17,8 @@ router.get('/doctor-services/:id', serviceController.getServicesByDoctorId);
 
 router.get('/:id', serviceController.getSingleService);
 
+router.patch('/:id', serviceController.updateSingleService);
+
+router.delete('/:id', serviceController.deleteSingleService);
+
 export const serviceRoute = router;

@@ -20,7 +20,30 @@ const createServiceValidationSchema = z.object({
       .min(0, 'Service fee cannot be negative.'),
   }),
 });
+const updateServiceValidationSchema = z.object({
+  body: z.object({
+    name: z
+      .string({ required_error: 'Service name is required' })
+      .min(3, 'Service name must be at least 3 characters long.')
+      .max(255, 'Service name cannot exceed 255 characters.')
+      .trim()
+      .optional(),
+    description: z
+      .string({ required_error: 'Service description is required' })
+      .min(10, 'Service description must be at least 10 characters long.')
+      .max(1024, 'Service description cannot exceed 1024 characters.')
+      .trim()
+      .optional(),
+    imgUrl: z.string({ required_error: 'Image url is required' }).optional(),
+    fee: z
+      .number({ required_error: 'Fee is required' })
+      .nonnegative()
+      .min(0, 'Service fee cannot be negative.')
+      .optional(),
+  }),
+});
 
 export const serviceValidationSchema = {
   createServiceValidationSchema,
+  updateServiceValidationSchema,
 };

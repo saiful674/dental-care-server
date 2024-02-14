@@ -50,9 +50,34 @@ const getSingleServiceFromDb = async (id: string) => {
   return isServiceExists;
 };
 
+const updateServiceIntoDb = async (id: string, payload: Partial<TService>) => {
+  const isServiceExists = await Service.findById(id);
+  if (!isServiceExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Service is not found');
+  }
+
+  const result = await Service.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
+  return result;
+};
+
+const deleteServiceIntoDb = async (id: string) => {
+  const isServiceExists = await Service.findById(id);
+  if (!isServiceExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Service is not found');
+  }
+
+  const result = await Service.findByIdAndDelete(id);
+  return result;
+};
+
 export const servicesService = {
   createServiceIntoDb,
   getAllServicesByDoctorIdFromDb,
   getAllServicesFromDb,
   getSingleServiceFromDb,
+  updateServiceIntoDb,
+  deleteServiceIntoDb,
 };

@@ -40,9 +40,32 @@ const getServicesByDoctorId = catchAsync(async (req, res) => {
   });
 });
 
+const updateSingleService = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await servicesService.updateServiceIntoDb(id, req.body);
+  // will send response data
+  res.status(200).json({
+    status: true,
+    message: 'Service is update successfully',
+    data: result,
+  });
+});
+const deleteSingleService = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await servicesService.deleteServiceIntoDb(id);
+  // will send response data
+  res.status(200).json({
+    status: true,
+    message: 'Service is deleted successfully',
+    data: result,
+  });
+});
+
 export const serviceController = {
   createService,
   getAllServices,
   getSingleService,
   getServicesByDoctorId,
+  updateSingleService,
+  deleteSingleService,
 };
