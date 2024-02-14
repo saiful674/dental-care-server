@@ -5,4 +5,5 @@ export type TService = {
   name: string;
   description: string;
   fee: number;
+  imgUrl: string;
 };

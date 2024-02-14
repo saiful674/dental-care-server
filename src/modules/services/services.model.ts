@@ -21,6 +21,10 @@ const serviceSchema = new Schema<TService>({
     maxlength: [1024, 'Service description cannot exceed 1024 characters.'],
     trim: true,
   },
+  imgUrl: {
+    type: String,
+    required: [true, 'Image url is required.'],
+  },
   fee: {
     type: Number,
     required: [true, 'Service fee is required.'],

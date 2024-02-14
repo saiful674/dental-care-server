@@ -13,6 +13,7 @@ const createServiceValidationSchema = z.object({
       .min(10, 'Service description must be at least 10 characters long.')
       .max(1024, 'Service description cannot exceed 1024 characters.')
       .trim(),
+    imgUrl: z.string({ required_error: 'Image url is required' }),
     fee: z
       .number({ required_error: 'Fee is required' })
       .nonnegative()

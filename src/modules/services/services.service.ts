@@ -26,6 +26,33 @@ const createServiceIntoDb = async (payload: TService) => {
   return result;
 };
 
+const getAllServicesFromDb = async () => {
+  const result = await Service.find();
+  return result;
+};
+
+const getAllServicesByDoctorIdFromDb = async (id: string) => {
+  const isDoctorExists = await Doctor.findById(id);
+  if (!isDoctorExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Doctor is not found');
+  }
+
+  const result = await Service.find({ doctorId: id });
+  return result;
+};
+
+const getSingleServiceFromDb = async (id: string) => {
+  const isServiceExists = await Service.findById(id);
+  if (!isServiceExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Service is not found');
+  }
+
+  return isServiceExists;
+};
+
 export const servicesService = {
   createServiceIntoDb,
+  getAllServicesByDoctorIdFromDb,
+  getAllServicesFromDb,
+  getSingleServiceFromDb,
 };
