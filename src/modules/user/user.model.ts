@@ -1,7 +1,7 @@
 import bycript from 'bcrypt';
 import { Schema, model } from 'mongoose';
 import config from '../../config';
-import { TUser } from './user.interface';
+import { TUser, UserModel } from './user.interface';
 const userSchema = new Schema<TUser>(
   {
     email: {
@@ -49,6 +49,19 @@ userSchema.pre('save', async function async(next) {
   next();
 });
 
-const User = model<TUser>('User', userSchema);
+// mongoose static methods
+// find user by email
+userSchema.statics.isUserExistsByEmail = async function (email: string) {
+  return await User.findOne({ email }).select('+password');
+};
+// check if the password match or ont
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashedPassword,
+) {
+  return await bycript.compare(plainTextPassword, hashedPassword);
+};
+
+const User = model<TUser, UserModel>('User', userSchema);
 
 export default User;

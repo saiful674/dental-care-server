@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { adminRoutes } from '../modules/admin/admin.routes';
 import { appoinmentRoutes } from '../modules/appointment/appoinment.routes';
+import { authRoutes } from '../modules/auth/auth.routes';
 import { blogRoutes } from '../modules/blog/blog.routes';
 import { doctortRoutes } from '../modules/doctor/doctor.routes';
 import { patientRoutes } from '../modules/patient/patient.routes';
@@ -37,6 +38,10 @@ const pathRouter = [
   {
     path: '/blogs',
     route: blogRoutes,
+  },
+  {
+    path: '/auth',
+    route: authRoutes,
   },
 ];
 
