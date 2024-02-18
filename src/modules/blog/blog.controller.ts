@@ -6,7 +6,7 @@ const createBlog = catchAsync(async (req, res) => {
   // will send response data
   res.status(200).json({
     status: true,
-    message: 'Blog schedule added successfully',
+    message: 'Blog id added successfully',
     data: result,
   });
 });
@@ -26,7 +26,7 @@ const getSingleBlog = catchAsync(async (req, res) => {
   // will send response data
   res.status(200).json({
     status: true,
-    message: 'Blog id retrived successfully',
+    message: 'Blog is retrived successfully',
     data: result,
   });
 });

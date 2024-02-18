@@ -18,6 +18,9 @@ const userSchema = new Schema<TUser>(
       required: [true, 'Password is required'],
       select: 0,
     },
+    passwordChangedAt: {
+      type: String,
+    },
     role: {
       type: String,
       enum: ['patient', 'doctor', 'admin'],
@@ -60,6 +63,15 @@ userSchema.statics.isPasswordMatched = async function (
   hashedPassword,
 ) {
   return await bycript.compare(plainTextPassword, hashedPassword);
+};
+
+userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
+  passwordChangedTimestamp: Date,
+  jwtIssuedTimestamp: number,
+) {
+  const passwordChangedTime =
+    new Date(passwordChangedTimestamp).getTime() / 1000;
+  return passwordChangedTime > jwtIssuedTimestamp;
 };
 
 const User = model<TUser, UserModel>('User', userSchema);
