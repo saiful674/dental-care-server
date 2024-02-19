@@ -3,6 +3,7 @@ import httpStatus from 'http-status';
 import { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
 import AppError from '../../errors/AppError';
+import { sendEmail } from '../../utils/sendEmail';
 import User from '../user/user.model';
 import { TLogin } from './auth.interface';
 import { createToken } from './auth.utils';
@@ -99,7 +100,46 @@ const changePassword = async (
   return null;
 };
 
+const forgetPassword = async (userEmail: string) => {
+  // checking if the user is exist
+  const user = await User.isUserExistsByEmail(userEmail);
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+  }
+  // checking if the user is already deleted
+  const isDeleted = user?.isDeleted;
+
+  if (isDeleted) {
+    throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
+  }
+
+  // checking if the user is blocked
+  const userStatus = user?.status;
+
+  if (userStatus === 'block') {
+    throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
+  }
+
+  const jwtPayload = {
+    userId: user.id,
+    email: user.email,
+    role: user.role,
+  };
+
+  const resetToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    '10m',
+  );
+
+  const resetUILink = `${config.reset_pass_ui_link}?email=${user.email}&token=${resetToken} `;
+
+  sendEmail(user.email, resetUILink);
+};
+
 export const authServices = {
   loginUser,
   changePassword,
+  forgetPassword,
 };

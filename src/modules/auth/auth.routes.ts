@@ -22,5 +22,10 @@ router.post(
   validateRequest(changePasswordValidationSchema),
   authControllers.changePassword,
 );
+router.post(
+  '/forgot-password',
+  auth(USER_ROLE.admin, USER_ROLE.doctor, USER_ROLE.patient),
+  authControllers.forgotPassword,
+);
 
 export const authRoutes = router;
